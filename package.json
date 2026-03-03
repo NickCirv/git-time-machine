@@ -1,0 +1,35 @@
+{
+  "name": "git-time-machine",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Interactively browse git history and restore your codebase to any past commit",
+  "bin": {
+    "git-time-machine": "./index.js",
+    "gtm": "./index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "developer-tools",
+    "cli",
+    "nodejs",
+    "zero-dependencies",
+    "git",
+    "history",
+    "tui",
+    "interactive"
+  ],
+  "license": "MIT",
+  "author": "NickCirv",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NickCirv/git-time-machine.git"
+  },
+  "files": [
+    "index.js",
+    "package.json",
+    "README.md",
+    "LICENSE"
+  ]
+}
