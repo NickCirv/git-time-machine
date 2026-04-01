@@ -1,3 +1,5 @@
+![Banner](banner.svg)
+
 # git-time-machine
 
 > Interactively browse git history and restore your codebase to any past commit — with preview, diff, and safety checkpoints.
