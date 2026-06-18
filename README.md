@@ -1,106 +1,51 @@
-![Banner](banner.svg)
+<div align="center">
 
 # git-time-machine
 
-> Interactively browse git history and restore your codebase to any past commit — with preview, diff, and safety checkpoints.
+**Browse your git history in a TUI and safely restore any commit — with preview, diff, and automatic stash checkpoints.**
 
-Zero external dependencies. Pure Node.js ES modules. Works anywhere git does.
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue?labelColor=0B0A09)](LICENSE)
+[![Zero dependencies](https://img.shields.io/badge/dependencies-0-brightgreen?labelColor=0B0A09)](package.json)
+[![Node: >=18](https://img.shields.io/badge/node-%3E%3D18-brightgreen?labelColor=0B0A09)](package.json)
 
----
+</div>
 
 ## Install
 
 ```bash
-npm install -g git-time-machine
+npx github:NickCirv/git-time-machine
 ```
 
-Or run without installing:
+Or install globally:
 
 ```bash
-npx git-time-machine
+npm install -g github:NickCirv/git-time-machine
 ```
-
----
 
 ## Usage
 
+```bash
+gtm                            # Browse all commits in an interactive TUI
+gtm src/index.js               # Browse only commits that touched a specific file
+gtm --date "2 weeks ago"       # Jump to nearest commit before a date
+gtm --search "bug fix"         # Filter commits by message
+gtm --restore abc123f          # Non-interactive restore to a specific commit
+gtm checkpoints                # List all stash checkpoints created by gtm
 ```
-gtm [file]                    Browse all commits (or commits touching <file>)
-gtm --date "2 weeks ago"      Jump to nearest commit before date
-gtm --search "bug fix"        Filter commits by message
-gtm --restore <hash>          Non-interactive restore to commit
-gtm checkpoints               List saved checkpoint stashes
-```
+
+| Flag | Description |
+|------|-------------|
+| `[file]` | Browse commits touching this file only |
+| `--date <value>` | Jump to nearest commit before the given date string |
+| `--search <term>` | Filter commit list by message (case-insensitive) |
+| `--restore <hash>` | Restore non-interactively to a commit hash |
+
+**TUI keys:** `↑`/`↓`/`j`/`k` navigate · `Enter`/`p` toggle preview · `[`/`]` scroll preview · `Space` restore · `/` search · `g`/`G` top/bottom · `q` quit
+
+## What it does
+
+git-time-machine opens a split-pane TUI showing your commit history on the left and a live diff/file-tree preview on the right. Press `Space` on any commit to restore your repo to that point — it always stashes your current work first with a `gtm-checkpoint` label so nothing is lost. File-scoped restores (`gtm <file>`) only touch that single file, keeping the rest of your working tree untouched.
 
 ---
 
-## TUI Keys
-
-| Key | Action |
-|-----|--------|
-| `↑` / `k` | Navigate up |
-| `↓` / `j` | Navigate down |
-| `PgUp` / `PgDn` | Jump 10 commits |
-| `Enter` / `p` | Toggle commit preview |
-| `[` / `]` | Scroll preview up/down |
-| `Space` | Restore to selected commit |
-| `/` | Search commits |
-| `g` / `G` | Go to top/bottom |
-| `Esc` | Clear status message |
-| `q` / `Ctrl+C` | Quit |
-
----
-
-## Features
-
-### Interactive TUI browser (`gtm`)
-- Commit list: hash, date, author, message
-- Arrow keys to navigate, `Enter` to toggle preview
-- Preview shows file tree at that commit + diff stat
-- `Space` to restore — prompts for confirmation before doing anything
-- Stashes current changes with a `gtm-checkpoint` label before restoring
-- Restores via `git checkout <hash>` (detached HEAD) with a warning
-
-### Browse history for a specific file (`gtm <file>`)
-- Shows only commits that touched that file
-- Preview shows the file content at each commit
-- Restore just that file: `git checkout <hash> -- <file>`
-
-### Jump to a date (`gtm --date "2 weeks ago"`)
-- Finds the nearest commit before the given date
-- Accepts any date string that `git log --before` accepts
-
-### Search commits (`gtm --search "bug fix"`)
-- Filters commits by message (case-insensitive)
-- Combines with `--date` for targeted lookups
-
-### Non-interactive restore (`gtm --restore <hash>`)
-- Stashes current changes, then checks out the given commit
-- Shows the branch name to return to
-
-### List checkpoints (`gtm checkpoints`)
-- Lists all stash entries created by git-time-machine
-- Each one is labelled `gtm-checkpoint: before-restore-to-<hash>`
-
----
-
-## Safety
-
-- Never silently discards work — always stashes before any restore
-- Detached HEAD warning shown before full-repo restores
-- File-only restores are scoped and reversible
-- Confirmation prompt required before every restore
-
----
-
-## Requirements
-
-- Node.js 18+
-- Git 2.x+
-- Zero npm dependencies
-
----
-
-## License
-
-MIT
+<sub>Zero dependencies · Node >=18 · MIT · by <a href="https://github.com/NickCirv">NickCirv</a></sub>
